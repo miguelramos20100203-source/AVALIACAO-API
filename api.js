@@ -240,3 +240,31 @@ app.get("/tarefas/:id", (req, res) => {
 
     res.json(tarefa);
 });
+app.put("/tarefas/:id/status", (req, res) => {
+    const id = Number(req.params.id);
+    const { status } = req.body;
+
+    const tarefa = tarefas.find(tarefa => tarefa.id === id);
+
+    if (!tarefa) {
+        return res.status(404).json({
+            erro: "Tarefa não encontrada."
+        });
+    }
+
+    if (tarefa.status === "a fazer" && status === "em andamento") {
+        tarefa.status = status;
+    } else if (
+        tarefa.status === "em andamento" &&
+        status === "concluída"
+    ) {
+        tarefa.status = status;
+    } else {
+        return res.status(400).json({
+            erro: "Mudança de status não permitida.",
+            statusAtual: tarefa.status
+        });
+    }
+
+    res.json(tarefa);
+});
