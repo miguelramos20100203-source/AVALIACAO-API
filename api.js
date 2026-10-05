@@ -101,3 +101,83 @@ app.delete("/usuarios/:id", (req, res) => {
         mensagem: "Usuário excluído com sucesso."
     });
 });
+
+app.post("/projetos", (req, res) => {
+    const { nome, descricao } = req.body;
+
+    if (!nome) {
+        return res.status(400).json({
+            erro: "O nome do projeto é obrigatório."
+        });
+    }
+
+    const projeto = {
+        id: proximoProjetoId++,
+        nome,
+        descricao: descricao || ""
+    };
+
+    projetos.push(projeto);
+
+    res.status(201).json(projeto);
+});
+
+app.get("/projetos", (req, res) => {
+    res.json(projetos);
+});
+
+app.get("/projetos/:id", (req, res) => {
+    const id = Number(req.params.id);
+
+    const projeto = projetos.find(projeto => projeto.id === id);
+
+    if (!projeto) {
+        return res.status(404).json({
+            erro: "Projeto não encontrado."
+        });
+    }
+
+    res.json(projeto);
+});
+
+app.put("/projetos/:id", (req, res) => {
+    const id = Number(req.params.id);
+
+    const projeto = projetos.find(projeto => projeto.id === id);
+
+    if (!projeto) {
+        return res.status(404).json({
+            erro: "Projeto não encontrado."
+        });
+    }
+
+    const { nome, descricao } = req.body;
+
+    if (nome) {
+        projeto.nome = nome;
+    }
+
+    if (descricao !== undefined) {
+        projeto.descricao = descricao;
+    }
+
+    res.json(projeto);
+});
+
+app.delete("/projetos/:id", (req, res) => {
+    const id = Number(req.params.id);
+
+    const indice = projetos.findIndex(projeto => projeto.id === id);
+
+    if (indice === -1) {
+        return res.status(404).json({
+            erro: "Projeto não encontrado."
+        });
+    }
+
+    projetos.splice(indice, 1);
+
+    res.json({
+        mensagem: "Projeto excluído com sucesso."
+    });
+});
