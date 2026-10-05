@@ -181,3 +181,62 @@ app.delete("/projetos/:id", (req, res) => {
         mensagem: "Projeto excluído com sucesso."
     });
 });
+app.post("/tarefas", (req, res) => {
+    const { titulo, usuarioId, projetoId } = req.body;
+
+    if (!titulo || !usuarioId || !projetoId) {
+        return res.status(400).json({
+            erro: "Título, usuarioId e projetoId são obrigatórios."
+        });
+    }
+
+    const usuarioExiste = usuarios.find(
+        usuario => usuario.id === Number(usuarioId)
+    );
+
+    const projetoExiste = projetos.find(
+        projeto => projeto.id === Number(projetoId)
+    );
+
+    if (!usuarioExiste) {
+        return res.status(404).json({
+            erro: "Usuário não encontrado."
+        });
+    }
+
+    if (!projetoExiste) {
+        return res.status(404).json({
+            erro: "Projeto não encontrado."
+        });
+    }
+
+    const tarefa = {
+        id: proximaTarefaId++,
+        titulo,
+        usuarioId: Number(usuarioId),
+        projetoId: Number(projetoId),
+        status: "a fazer"
+    };
+
+    tarefas.push(tarefa);
+
+    res.status(201).json(tarefa);
+});
+
+app.get("/tarefas", (req, res) => {
+    res.json(tarefas);
+});
+
+app.get("/tarefas/:id", (req, res) => {
+    const id = Number(req.params.id);
+
+    const tarefa = tarefas.find(tarefa => tarefa.id === id);
+
+    if (!tarefa) {
+        return res.status(404).json({
+            erro: "Tarefa não encontrada."
+        });
+    }
+
+    res.json(tarefa);
+});
