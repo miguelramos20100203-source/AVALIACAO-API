@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/miguelramos20100203-source/AVALIACAO-API/issues"
   },
-  "homepage": "https://github.com/miguelramos20100203-source/AVALIACAO-API#readme"
+  "homepage": "https://github.com/miguelramos20100203-source/AVALIACAO-API#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }
