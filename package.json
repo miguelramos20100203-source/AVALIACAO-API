@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/miguelramos20100203-source/AVALIACAO-API#readme",
   "dependencies": {
+    "dotenv": "^18.0.10",
     "express": "^5.2.1",
-    "mongodb": "^7.8.0"
+    "mongodb": "^7.8.0",
+    "mongoose": "^9.13.0"
   }
 }
