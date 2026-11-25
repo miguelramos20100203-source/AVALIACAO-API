@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+    "db:up": "docker start avaliacao-api || docker run -d --name avaliacao-api -p 127.0.0.1:27017:27017 -v avaliacao-api-data:/data/db mongo:8",
+    "db:down": "docker stop avaliacao-api",
+    "db:logs": "docker logs -f avaliacao-api",
+    "db:reset": "docker rm -f avaliacao-api; docker volume rm avaliacao-api-data",
+    "predev": "npm run db:up",
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -13,7 +20,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/miguelramos20100203-source/AVALIACAO-API/issues"
   },
@@ -21,7 +28,6 @@
   "dependencies": {
     "dotenv": "^18.0.10",
     "express": "^5.2.1",
-    "mongodb": "^7.8.0",
-    "mongoose": "^9.13.0"
+    "mongodb": "^7.8.0"
   }
 }

@@ -1,7 +1,6 @@
-const usuariosService = require("../services/usuarios.service");
+import * as usuariosService from"../services/usuarios.service"
 
-function listarUsuarios (req,res){
-    const usuarios = usuariosService.listarUsuarios();
+export async function listarUsuarios (req,res){
+    const usuarios = await usuariosService.listarUsuarios();
     res.json(usuarios);
 } 
-module.exports={ listarUsuarios };

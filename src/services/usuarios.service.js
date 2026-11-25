@@ -1,7 +1,6 @@
-const usuariosmodel = require("../models/usuarios.model");
+import * as usuariosmodel from "../models/usuarios.model"
 
-function listarUsuarios() {
-    return usuariosmodel.listarUsuarios()
+export async function listarUsuarios() {
+    return await usuariosmodel.buscarTodas()
 
 }
-module.exports = { listarUsuarios};
